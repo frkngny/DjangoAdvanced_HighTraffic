@@ -1,4 +1,4 @@
-from post.views import post_detail, post_feed, add_post, handler_404
+from post.views import post_detail, post_feed, add_post, PostList, handler_404
 from profilepage.views import profile_detail
 from useraccount.views import useraccount_edit
 from business.views import business_listing
@@ -33,5 +33,6 @@ urlpatterns = [
     path('profile/<int:profilepage_id>', profile_detail, name='profile page'),
     path('useraccount/<int:useraccount_id>/edit', useraccount_edit, name='edit user profile'),
     path('businesses', business_listing, name='business_listing'),
+    path('postlist', PostList.as_view(), name='postlist'),
 ] +static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
