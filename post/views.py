@@ -1,8 +1,12 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 from django.template import loader
+from django.shortcuts import get_object_or_404
 from .models import Post
 from .forms import PostForm
 
+def handler_404(request, exception):
+    template = loader.get_template('post_404.html')
+    return HttpResponse(template.render({'exception': exception}, request), status=404)
 
 def post_feed(request):
     post_form = PostForm()
@@ -15,7 +19,7 @@ def post_feed(request):
 
 def post_detail(request, post_id):
     template = loader.get_template('post_detail.html')
-    post = Post.objects.get(id=post_id)
+    post = get_object_or_404(Post, id=post_id)
     return HttpResponse(template.render({'post': post}, request))
 
 def add_post(request):

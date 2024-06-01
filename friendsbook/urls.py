@@ -1,4 +1,4 @@
-from post.views import post_detail, post_feed, add_post
+from post.views import post_detail, post_feed, add_post, handler_404
 from profilepage.views import profile_detail
 from useraccount.views import useraccount_edit
 from business.views import business_listing
@@ -22,6 +22,8 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
+
+handler404 = handler_404
 
 urlpatterns = [
     path('admin/', admin.site.urls),
