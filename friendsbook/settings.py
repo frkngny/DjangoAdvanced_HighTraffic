@@ -39,12 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'bootstrap5',
 
-    'post.apps.PostConfig',
+    'post',
     'business.apps.BusinessConfig',
     'useraccount.apps.UseraccountConfig',
-    'profilepage.apps.ProfilepageConfig'
+    'profilepage.apps.ProfilepageConfig',
+    'dbtemplates',
 ]
 
 MIDDLEWARE = [

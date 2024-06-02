@@ -1,4 +1,5 @@
 {% include 'header.html' %}
+{% load custom_filter %}
 
 <div class="wrapper">
 
@@ -13,7 +14,7 @@
 <div class="post">
     <span id="post-{{post.id}}">
         <span class="date"><a href="/post/{{post.id}}">{{post.created_on}}</a></span> by <a href="/profile/{{ post.author.id }}">{{post.author.username}}</a>
-            </p>{{post.content}}
+            </p>{{post.content | single_exclamation:2 }}
     </span>
 </div>
 {% endfor %}

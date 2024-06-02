@@ -12,7 +12,7 @@ def accountlist(request):
     useraccounts = UserAccount.objects.defer('about')
     # useraccounts = UserAccount.objects.only('first_name', 'last_name')
     
-    #useraccounts = UserAccount.objects.all()
+    # useraccounts = UserAccount.objects.all()
     
     template = loader.get_template('accountlist.html')
     return HttpResponse(template.render({'useraccounts': useraccounts}, request))
