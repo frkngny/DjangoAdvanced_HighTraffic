@@ -8,6 +8,15 @@ from django.apps import apps
 from .forms import UserAccountForm
 
 
+def accountlist(request):
+    useraccounts = UserAccount.objects.defer('about')
+    # useraccounts = UserAccount.objects.only('first_name', 'last_name')
+    
+    #useraccounts = UserAccount.objects.all()
+    
+    template = loader.get_template('accountlist.html')
+    return HttpResponse(template.render({'useraccounts': useraccounts}, request))
+    
 
 def useraccount_edit(request, useraccount_id):
     useraccount = get_object_or_404(UserAccount, id=useraccount_id)

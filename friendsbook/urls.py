@@ -1,6 +1,6 @@
 from post.views import post_detail, post_feed, add_post, PostList, handler_404
 from profilepage.views import profile_detail
-from useraccount.views import useraccount_edit
+from useraccount.views import useraccount_edit, accountlist
 from business.views import business_listing
 
 """friendsbook URL Configuration
@@ -34,5 +34,6 @@ urlpatterns = [
     path('useraccount/<int:useraccount_id>/edit', useraccount_edit, name='edit user profile'),
     path('businesses', business_listing, name='business_listing'),
     path('postlist', PostList.as_view(), name='postlist'),
+    path('accountlist', accountlist, name='accountlist'),
 ] +static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
