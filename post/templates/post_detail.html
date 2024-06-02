@@ -6,5 +6,13 @@
             <span class="date">{{post.created_on}}</span> by <a href="/profile/{{ post.author.id }}">{{post.author.username}}</a>
                 </p>{{post.content}}
         </span>
+        {% for comment in comments %}
+            <div class="post">
+                <span id="comment-{{comment.id}}">
+                    <span class="date">{{comment.created_on}}</span> by <a href="/profile/{{ comment.author.id }}">{{comment.author.username}}</a>
+                        </p>{{comment.content}}
+                </span>
+            </div>
+        {% endfor %}
     </div>
 </div>

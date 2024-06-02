@@ -47,7 +47,7 @@ def post_feed(request):
 def post_detail(request, post_id):
     template = loader.get_template('post_detail.html')
     post = get_object_or_404(Post, id=post_id)
-    return HttpResponse(template.render({'post': post}, request))
+    return HttpResponse(template.render({'post': post, 'comments': post.comment_set.all()}, request))
 
 def add_post(request):
     if request.method == "POST":

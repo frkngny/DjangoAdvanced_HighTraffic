@@ -16,3 +16,22 @@ class Post(models.Model):
 
     def __str__(self):
         return '{}: {}'.format(self.author, self.content[0:20])
+    
+    
+class Comment(models.Model):
+    post = models.ForeignKey(Post, null=True, on_delete=CASCADE)
+    author = models.ForeignKey(User, null=True, blank=True, on_delete=CASCADE)
+    content = models.TextField(validators=[validate_no_bad_words])
+    created_on = models.DateTimeField('date created', auto_now_add=True)
+    
+    def __str__(self):
+        return '{}: {}'.format(self.author, self.content[0:20])
+
+"""
+on_delete:
+* CASCADE -> deletes the object if parent is deleted
+* PROTECT -> does not let the parent to be deleted until object is deleted
+* RESTRICT -> does not let the parent to be deleted if it tries to delete object through it's linked parent
+* SET_NULL -> lets parent to be deleted and sets the foreignkey of the object to null
+* SET_DEFAULT -> same as null but sets to a default value
+"""
