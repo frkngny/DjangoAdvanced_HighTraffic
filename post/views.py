@@ -9,6 +9,8 @@ from django.views.decorators.vary import vary_on_cookie
 from .models import Post
 from .forms import PostForm
 
+import json
+
 def handler_404(request, exception):
     template = loader.get_template('post_404.html')
     return HttpResponse(template.render({'exception': exception}, request), status=404)
@@ -58,6 +60,14 @@ def post_detail(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     return HttpResponse(template.render({'post': post, 'comments': post.comment_set.all()}, request))
 
+
+def draft_post(request):
+    if request.method == 'POST':
+        print(json.loads(request.body.decode('utf-8'))['post_content'])
+        request.session['draft_post'] = json.loads(request.body.decode('utf-8'))['post_content']
+        return HttpResponse(status=200)
+
+
 def add_post(request):
     if request.method == "POST":
         form = PostForm(request.POST)
@@ -71,3 +81,10 @@ def add_post(request):
         else:
             print(form.errors)
         return form
+    else:
+        template = loader.get_template('add_post.html')
+        form = PostForm()
+        if request.session.get('draft_post'):
+            print(request.session.get('draft_post'))
+            form = PostForm({'content': request.session.get('draft_post')})
+        return HttpResponse(template.render({'form': form}, request))

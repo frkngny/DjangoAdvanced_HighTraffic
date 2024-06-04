@@ -76,6 +76,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'string_if_invalid': 'The admin has some work to do!',
         },
     },
 ]
@@ -136,10 +137,81 @@ CACHES = {
     }
 }
 
-CACHE_MIDDLEWARE_ALIAS = 'file'
-CACHE_MIDDLEWARE_SECONDS  = 15 * 60 # 15 min cache
-# Used to prevent key collision if cache is shared across multiple projects
-CACHE_MIDDLEWARE_KEY_PREFIX = ''
+# CACHE_MIDDLEWARE_ALIAS = 'file'
+# CACHE_MIDDLEWARE_SECONDS  = 15 * 60 # 15 min cache
+# # Used to prevent key collision if cache is shared across multiple projects
+# CACHE_MIDDLEWARE_KEY_PREFIX = ''
+
+"""
+django.contrib.sessions.backends.cached  -> Stores in the cache only
+django.contrib.sessions.backends.cached_db   -> goes to cache first, if not found, goes to db
+"""
+SESSION_ENGNE = 'django.contrib.sessions.backends.cached_db'
+
+
+# Logging
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "filters": {
+        "require_debug_false": {
+            "()": "django.utils.log.RequireDebugFalse",
+        },
+        "require_debug_true": {
+            "()": "django.utils.log.RequireDebugTrue",
+        },
+    },
+    "formatters": {
+        "django.server": {
+            "()": "django.utils.log.ServerFormatter",
+            "format": "[{server_time}] {message}",
+            "style": "{",
+        },
+        "django.template": {
+            "()": "django.utils.log.ServerFormatter",
+            "format": "TEMPLATE ERROR [{server_time}] {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "console": {
+            "level": "INFO",
+            "filters": ["require_debug_true"],
+            "class": "logging.StreamHandler",
+        },
+        "django.server": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "formatter": "django.server",
+        },
+        "django.template": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "django.template",
+        },
+        "mail_admins": {
+            "level": "ERROR",
+            "filters": ["require_debug_false"],
+            "class": "django.utils.log.AdminEmailHandler",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console", "mail_admins"],
+            "level": "INFO",
+        },
+        "django.server": {
+            "handlers": ["django.server"],
+            "level": "INFO",
+            "propagate": False,
+        },
+        "django.template": {
+            "handlers": ["django.template"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
+    },
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/

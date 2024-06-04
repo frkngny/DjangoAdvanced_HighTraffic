@@ -1,4 +1,4 @@
-from post.views import post_detail, post_feed, add_post, PostList, handler_404
+from post.views import post_detail, post_feed, add_post, PostList, handler_404, draft_post
 from profilepage.views import profile_detail, custom_content
 from useraccount.views import useraccount_edit, accountlist
 from business.views import business_listing
@@ -37,5 +37,6 @@ urlpatterns = [
     path('accountlist', accountlist, name='accountlist'),
     path('custom/<int:profilepage_id>', custom_content, name='custom page'),
     path('account/', include('django.contrib.auth.urls')),
+    path('draft_post', draft_post, name='draft_post'),
 ] +static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
